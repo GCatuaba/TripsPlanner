@@ -1,38 +1,37 @@
 "use client";
 
-import Image from 'next/image';
 import { Play } from 'lucide-react';
+import { useTranslation } from '@/context/LanguageContext';
+import { SearchWidget } from './SearchWidget';
 
 interface HeroProps {
-    onStart: () => void;
+    onStart: (type: 'flight' | 'hotel', destination: string, date: string) => void;
 }
 
 export function Hero({ onStart }: HeroProps) {
+    const { t } = useTranslation();
+
     return (
         <section className="hero-section">
             <div className="container hero-content">
                 <div className="hero-text-col fade-up">
-                    <span className="subtitle">BEST DESTINATIONS AROUND THE WORLD</span>
+                    <span className="subtitle">{t.hero.subtitle}</span>
                     <h1 className="title">
-                        Travel, <span className="highlight">enjoy</span> and live a new and full life
+                        {t.hero.title_start}
+                        <span className="highlight">{t.hero.title_highlight}</span>
+                        {t.hero.title_end}
                     </h1>
                     <p className="description">
-                        Built Wicket longer admire do barton vanity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.
+                        {t.hero.description}
                     </p>
 
-                    <div className="hero-buttons">
-                        <button className="btn-primary" onClick={onStart}>Find out more</button>
-                        <button className="btn-play">
-                            <div className="play-icon-wrapper">
-                                <Play size={16} fill="white" className="play-icon" />
-                            </div>
-                            <span className="play-text">Play Demo</span>
-                        </button>
+                    {/* Replaced buttons with SearchWidget for immediate action */}
+                    <div className="widget-wrapper-mobile">
+                        {/* Mobile view might show buttons or collapsed widget. For now, hiding buttons in favor of widget. */}
                     </div>
                 </div>
 
                 <div className="hero-image-col fade-up" style={{ animationDelay: '0.2s' }}>
-                    {/* We will place the generated image here */}
                     <div className="image-wrapper">
                         <img
                             src="/assets/images/hero-traveler.png"
@@ -45,18 +44,22 @@ export function Hero({ onStart }: HeroProps) {
                 </div>
             </div>
 
+            {/* Widget Overlapping Section */}
+            <div className="container widget-container fade-up" style={{ animationDelay: '0.4s' }}>
+                <SearchWidget onSearch={onStart} />
+            </div>
+
             {/* Background blobs for Jadoo effect */}
             <div className="bg-blob-right"></div>
             <div className="bg-blob-left"></div>
 
             <style jsx>{`
         .hero-section {
-          padding: 3rem 0;
+          padding-top: 8rem; /* Space for fixed header */
+          padding-bottom: 5rem;
           position: relative;
-          overflow: hidden;
-          min-height: 700px;
-          display: flex;
-          align-items: center;
+          overflow: visible; /* Allow widget overlap */
+          min-height: 800px;
         }
 
         .hero-content {
@@ -65,6 +68,13 @@ export function Hero({ onStart }: HeroProps) {
           justify-content: space-between;
           position: relative;
           z-index: 10;
+          margin-bottom: 2rem;
+        }
+
+        .widget-container {
+            position: relative;
+            z-index: 30;
+            margin-top: -50px; /* Pull widget up slightly */
         }
 
         .hero-text-col {
@@ -83,10 +93,11 @@ export function Hero({ onStart }: HeroProps) {
         }
 
         .title {
-          font-size: 5rem;
+          font-size: 4.5rem;
           line-height: 1.1;
           margin-bottom: 2rem;
           letter-spacing: -2px;
+          color: var(--text-primary);
         }
 
         .highlight {
@@ -109,49 +120,13 @@ export function Hero({ onStart }: HeroProps) {
         }
 
         .description {
-          color: var(--text-secondary);
-          line-height: 1.8;
-          font-size: 1rem;
-          margin-bottom: 2.5rem;
-          font-family: var(--font-body);
-        }
-
-        .hero-buttons {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-        }
-
-        .btn-play {
-          background: none;
-          border: none;
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          cursor: pointer;
-        }
-
-        .play-icon-wrapper {
-          width: 50px;
-          height: 50px;
-          background: var(--primary-orange);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 15px 30px rgba(223, 105, 81, 0.3);
-          transition: transform 0.2s;
-        }
-
-        .btn-play:hover .play-icon-wrapper {
-            transform: scale(1.1);
-        }
-
-        .play-text {
             color: var(--text-secondary);
-            font-weight: 500;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            font-family: var(--font-body);
         }
-        
+
         .hero-image-col {
             flex: 1;
             position: relative;
@@ -167,8 +142,8 @@ export function Hero({ onStart }: HeroProps) {
             max-width: 100%;
             height: auto;
             object-fit: contain;
-            /* Placeholder size if image fails or while loading */
             width: 700px; 
+            transform: scale(1.1) translateY(-20px);
         }
 
         .bg-blob-right {
@@ -216,8 +191,8 @@ export function Hero({ onStart }: HeroProps) {
            .title { font-size: 3.5rem; }
            .hero-content { flex-direction: column-reverse; text-align: center; }
            .hero-text-col { margin-top: 2rem; max-width: 100%; }
-           .hero-buttons { justify-content: center; }
            .bg-blob-right { transform: translate(50%, -50%); }
+           .widget-container { margin-top: 0; }
         }
       `}</style>
         </section>

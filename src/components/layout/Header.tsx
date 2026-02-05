@@ -1,9 +1,15 @@
 "use client";
 
 import Link from 'next/link';
-import { Plane } from 'lucide-react';
+import { useTranslation } from '@/context/LanguageContext';
 
 export function Header() {
+  const { t, language, setLanguage } = useTranslation();
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'pt' : 'en');
+  };
+
   return (
     <header className="header">
       <div className="container header-content">
@@ -11,16 +17,16 @@ export function Header() {
           Jadoo
         </Link>
         <nav className="nav">
-          <Link href="/" className="nav-link">Destinations</Link>
-          <Link href="/" className="nav-link">Hotels</Link>
-          <Link href="/" className="nav-link">Flights</Link>
-          <Link href="/" className="nav-link">Bookings</Link>
+          <Link href="/" className="nav-link">{t.header.destinations}</Link>
+          <Link href="/" className="nav-link">{t.header.hotels}</Link>
+          <Link href="/" className="nav-link">{t.header.flights}</Link>
+          <Link href="/" className="nav-link">{t.header.bookings}</Link>
 
-          <Link href="/login" className="nav-link">Login</Link>
-          <button className="btn-signup">Sign up</button>
+          <Link href="/login" className="nav-link">{t.header.login}</Link>
+          <button className="btn-signup">{t.header.signup}</button>
 
-          <div className="lang-selector">
-            EN <span className="arrow">▼</span>
+          <div className="lang-selector" onClick={toggleLanguage}>
+            {language === 'en' ? 'EN' : 'PT'} <span className="arrow">▼</span>
           </div>
         </nav>
       </div>
@@ -95,6 +101,7 @@ export function Header() {
             display: flex;
             align-items: center;
             gap: 0.25rem;
+            user-select: none;
         }
         
         .arrow {

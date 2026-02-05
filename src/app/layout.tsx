@@ -3,6 +3,7 @@ import { Inter, Volkhov, Poppins } from "next/font/google"; // Import new fonts
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 // Configure fonts
 const inter = Inter({ subsets: ["latin"] });
@@ -30,11 +31,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} ${volkhov.variable} ${poppins.variable}`}>
-        <div className="layout-wrapper">
-          <Header />
-          <main className="main-content">{children}</main>
-          <Footer />
-        </div>
+        <LanguageProvider>
+          <div className="layout-wrapper">
+            <Header />
+            <main className="main-content">{children}</main>
+            <Footer />
+          </div>
+        </LanguageProvider>
       </body>
     </html>
   );

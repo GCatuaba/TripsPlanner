@@ -49,7 +49,7 @@ export function BookingSteps() {
                 <div className="card-mockup-wrapper fade-up" style={{ animationDelay: '0.2s' }}>
                     <div className="trip-card-mockup">
                         <div className="mockup-image">
-                            <img src="google_generated_images/greece_santorini.png" alt="Greece" />
+                            <img src="/assets/images/booking-greece.png" alt="Greece" />
                         </div>
                         <div className="mockup-content">
                             <h3>Trip To Greece</h3>
@@ -74,7 +74,7 @@ export function BookingSteps() {
                         <div className="floating-card">
                             <div className="floating-content">
                                 <div className="floating-icon">
-                                    <img src="google_generated_images/rome_coliseum.png" alt="Rome" className="floating-thumb" />
+                                    <img src="/assets/images/dest-rome.png" alt="Rome" className="floating-thumb" />
                                 </div>
                                 <div className="floating-text">
                                     <span className="ongoing">Ongoing</span>

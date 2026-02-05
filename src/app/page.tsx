@@ -6,49 +6,84 @@ import { TripTypeSelector } from '@/components/trip/TripTypeSelector';
 import { DestinationCard } from '@/components/trip/DestinationCard';
 import { TravelersSelector } from '@/components/trip/TravelersSelector';
 import { CabinClassSelector } from '@/components/trip/CabinClassSelector';
+import { BudgetCalculator } from '@/components/food/BudgetCalculator';
 import { FlightCard } from '@/components/flights/FlightCard';
 import { HotelCard } from '@/components/accommodation/HotelCard';
-import { BudgetCalculator } from '@/components/food/BudgetCalculator';
 import { ItinerarySuggestions } from '@/components/entertainment/ItinerarySuggestions';
 import { TripSummary } from '@/components/summary/TripSummary';
-import { searchFlights, searchHotels } from '@/lib/api';
-import { type Flight, type Hotel } from '@/types';
-import { ArrowRight, Plane, Building } from 'lucide-react';
+import { Plane, Building, ArrowRight } from 'lucide-react';
 
 /* Jadoo Components */
 import { Hero } from '@/components/landing/Hero';
 import { Services } from '@/components/landing/Services';
 import { Destinations } from '@/components/landing/Destinations';
 import { BookingSteps } from '@/components/landing/BookingSteps';
+import { useTranslation } from '@/context/LanguageContext';
+import { searchFlights, searchHotels } from '@/lib/api';
+import { type Flight, type Hotel } from '@/types';
 
 export default function Home() {
   const { state, actions, isValid } = useTripPlanner();
-  const [flights, setFlights] = useState<Flight[]>([]);
-  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [mode, setMode] = useState<'landing' | 'planning' | 'results'>('landing');
+  const plannerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [flights, setFlights] = useState<Flight[]>([]);
+  const [hotels, setHotels] = useState<Hotel[]>([]);
   const [budget, setBudget] = useState({ food: 0, extras: 0, total: 0 });
-  const [mode, setMode] = useState<'landing' | 'planning' | 'results'>('landing'); // Mode state
-
-  const plannerRef = useRef<HTMLDivElement>(null);
 
   const totalTravelers = state.travelers.adults + state.travelers.children + state.travelers.babies;
   const duration = 5;
 
-  const handleStartPlanning = () => {
-    setMode('planning');
-    // Allow React to render state change then scroll
+  const handleStartPlanning = (type: 'flight' | 'hotel', destination: string, date: string) => {
+    // Updates state from Widget
+    const newDestinations = [{
+      id: crypto.randomUUID(),
+      city: destination,
+      startDate: date,
+      endDate: '' // Default empty for now
+    }];
+    actions.updateDestinations(newDestinations);
+
+    // Immediate search with params
+    doSearchWithParams(destination, date);
+
     setTimeout(() => {
       plannerRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
+  const doSearchWithParams = async (city: string, date: string) => {
+    setLoading(true);
+    setSearched(true);
+    setMode('results');
+    setFlights([]);
+    setHotels([]);
+
+    try {
+      const [flightResults, hotelResults] = await Promise.all([
+        searchFlights(city, date),
+        // searchHotels needs duration (nights), defaulting to 5
+        searchHotels(city, 5)
+      ]);
+      setFlights(flightResults);
+      setHotels(hotelResults);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = async () => {
-    if (!isValid) return;
+    if (!isValid) return;  // Wizard validation
 
     setLoading(true);
     setSearched(true);
-    setMode('results'); // Switch mode to results
+    setMode('results');
     setFlights([]);
     setHotels([]);
 
@@ -56,12 +91,10 @@ export default function Home() {
 
     try {
       if (firstDest && firstDest.city && firstDest.startDate) {
-        // Parallel fetch for speed
         const [flightResults, hotelResults] = await Promise.all([
           searchFlights(firstDest.city, firstDest.startDate),
           searchHotels(firstDest.city, duration)
         ]);
-
         setFlights(flightResults);
         setHotels(hotelResults);
       }
@@ -148,7 +181,7 @@ export default function Home() {
                 <div className="results-container fade-up">
                   <div className="results-header">
                     <h2 className="results-title">
-                      Opções para <span className="highlight">{state.destinations[0].city}</span>
+                      Opções para <span className="highlight">{state.destinations[0]?.city}</span>
                     </h2>
                     <button className="btn-text" onClick={() => { setSearched(false); setMode('planning'); }}>
                       Nova busca
@@ -206,7 +239,7 @@ export default function Home() {
 
                       <div className="itinerary-section fade-up" style={{ animationDelay: '0.3s' }}>
                         <ItinerarySuggestions
-                          destination={state.destinations[0].city}
+                          destination={state.destinations[0]?.city}
                           days={duration}
                         />
                       </div>
@@ -229,15 +262,24 @@ export default function Home() {
         </section>
       )}
 
+      {/* Default Landing Sections (Always visible or hidden on results? Keeping visible as per single page design) */}
+      <div className={mode === 'results' ? 'dimmed' : ''}>
+        <Services />
+        <Destinations />
+        <BookingSteps />
+      </div>
+
       <style jsx>{`
         .home-container {
-          padding-bottom: 4rem;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .planner-section {
           background: #f9f9f9;
           padding: 5rem 0;
           min-height: 80vh;
+          scroll-margin-top: 50px;
         }
 
         .section-header {
@@ -379,6 +421,11 @@ export default function Home() {
         .empty-state {
             color: var(--text-secondary);
             font-style: italic;
+        }
+
+        .dimmed {
+            filter: grayscale(0.5) opacity(0.7);
+            pointer-events: none;
         }
         
         @keyframes fadeUp {

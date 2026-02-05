@@ -8,21 +8,21 @@ export function Destinations() {
             city: "Rome, Italy",
             days: "10 Days Trip",
             price: "$5.42k",
-            image: "google_generated_images/rome_coliseum.png",
+            image: "/assets/images/dest-rome.png",
             rating: "5.0"
         },
         {
             city: "London, UK",
             days: "12 Days Trip",
             price: "$4.2k",
-            image: "google_generated_images/london_bigben.png",
+            image: "/assets/images/dest-london.png",
             rating: "4.8"
         },
         {
             city: "Full Europe",
             days: "28 Days Trip",
             price: "$15k",
-            image: "google_generated_images/europe_nature.png",
+            image: "/assets/images/dest-europe.png",
             rating: "4.9"
         }
     ];
