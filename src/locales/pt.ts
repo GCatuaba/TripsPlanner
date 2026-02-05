@@ -36,8 +36,13 @@ export const pt = {
         step2: { title: "Faça o Pagamento", desc: "Pagamento seguro e rápido para confirmar sua reserva." },
         step3: { title: "Chegue ao Aeroporto", desc: "Tudo pronto! É só embarcar e curtir a experiência." },
         card_title: "Viagem para Grécia",
+        card_date: "14-29 de Junho",
+        card_author: "por Robbin Joseph",
         ongoing: "Em andamento",
-        completed: "concluído"
+        ongoing_trip: "Viagem para Roma",
+        completed: "concluído",
+        people_going: "pessoas indo",
+        people_going_count: "24 pessoas indo"
     },
     search: {
         tab_flights: "Voos",
@@ -46,6 +51,7 @@ export const pt = {
         placeholder_destination: "Para onde você vai?",
         label_date: "Data",
         label_guests: "Hóspedes",
+        placeholder_guests: "1 Pessoa",
         btn_search: "Buscar Melhores Opções"
     }
 };

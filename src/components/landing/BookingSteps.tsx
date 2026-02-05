@@ -55,7 +55,7 @@ export function BookingSteps() {
                         </div>
                         <div className="mockup-content">
                             <h3>{t.booking.card_title}</h3>
-                            <p className="date">14-29 June | by Robbin joseph</p>
+                            <p className="date">{t.booking.card_date} | {t.booking.card_author}</p>
 
                             <div className="mockup-icons">
                                 <span className="icon-circle"><Leaf size={14} /></span>
@@ -66,7 +66,7 @@ export function BookingSteps() {
                             <div className="mockup-footer">
                                 <div className="people-count">
                                     <Building size={16} className="building-icon" />
-                                    <span>24 people going</span>
+                                    <span>{t.booking.people_going_count}</span>
                                 </div>
                                 <Heart size={20} className="heart-icon" />
                             </div>
@@ -80,7 +80,7 @@ export function BookingSteps() {
                                 </div>
                                 <div className="floating-text">
                                     <span className="ongoing">{t.booking.ongoing}</span>
-                                    <h4>Trip to rome</h4>
+                                    <h4>{t.booking.ongoing_trip}</h4>
                                     <div className="progress-bar">
                                         <div className="progress" style={{ width: '40%' }}></div>
                                     </div>

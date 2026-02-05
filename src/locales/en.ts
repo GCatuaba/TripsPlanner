@@ -36,8 +36,13 @@ export const en = {
         step2: { title: "Make Payment", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus." },
         step3: { title: "Reach Airport on Selected Date", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus." },
         card_title: "Trip To Greece",
+        card_date: "14-29 June",
+        card_author: "by Robbin Joseph",
         ongoing: "Ongoing",
-        completed: "completed"
+        ongoing_trip: "Trip to Rome",
+        completed: "completed",
+        people_going: "people going",
+        people_going_count: "24 people going"
     },
     search: {
         tab_flights: "Flights",
@@ -46,6 +51,7 @@ export const en = {
         placeholder_destination: "Where are you going?",
         label_date: "Date",
         label_guests: "Guests",
+        placeholder_guests: "1 Person",
         btn_search: "Search"
     }
 };

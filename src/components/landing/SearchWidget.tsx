@@ -65,7 +65,7 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                     <label>{t.search.label_guests}</label>
                     <div className="input-wrapper">
                         <div className="fake-select">
-                            <User size={16} /> 1 Person
+                            <User size={16} /> {t.search.placeholder_guests}
                         </div>
                     </div>
                 </div>
