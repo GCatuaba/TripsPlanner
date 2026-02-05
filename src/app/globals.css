@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Jadoo Palette */
+  --primary-orange: #DF6951;
+  --accent-yellow: #F1A501;
+  --text-primary: #181E4B;
+  --text-secondary: #5E6282;
+  --bg-cream: #FFF1DA;
+  --bg-white: #FFFFFF;
+
+  /* Legacy/Compat variables mapped to new palette or kept for utility */
+  --primary-start: var(--primary-orange);
+  --secondary-dark: var(--text-primary);
+  --bg-light: var(--bg-cream);
+
+  /* Layout */
+  --max-width: 1160px;
+  --header-height: 80px;
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 20px;
+  --radius-lg: 30px;
+
+  /* Fonts */
+  --font-heading: var(--font-volkhov), serif;
+  --font-body: var(--font-poppins), sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: var(--text-primary);
+  background: white;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Utilities */
+.text-orange {
+  color: var(--primary-orange);
+}
+
+.text-blue {
+  color: var(--text-primary);
+}
+
+.text-gray {
+  color: var(--text-secondary);
+}
+
+.btn-primary {
+  background-color: var(--accent-yellow);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 20px 35px rgba(241, 165, 1, 0.15);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 35px rgba(241, 165, 1, 0.25);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
