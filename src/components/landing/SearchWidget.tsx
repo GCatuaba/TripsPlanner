@@ -24,7 +24,13 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
     ]);
 
     const addDestination = () => {
-        setDestinations([...destinations, { id: crypto.randomUUID(), city: '', startDate: '', endDate: '' }]);
+        const lastDest = destinations[destinations.length - 1];
+        setDestinations([...destinations, {
+            id: crypto.randomUUID(),
+            city: '',
+            startDate: lastDest?.endDate || '',
+            endDate: ''
+        }]);
     };
 
     const removeDestination = (id: string) => {
