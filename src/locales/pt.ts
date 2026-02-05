@@ -38,20 +38,25 @@ export const pt = {
         card_title: "Viagem para Grécia",
         card_date: "14-29 de Junho",
         card_author: "por Robbin Joseph",
-        ongoing: "Em andamento",
         ongoing_trip: "Viagem para Roma",
         completed: "concluído",
         people_going: "pessoas indo",
-        people_going_count: "24 pessoas indo"
+        people_going_count: "24 pessoas indo",
+        stay_duration: "dias de estadia",
+        ongoing: "Em andamento",
+        multidestination: "Multidestino"
     },
     search: {
         tab_flights: "Voos",
         tab_hotels: "Hotéis",
         label_destination: "Destino",
         placeholder_destination: "Para onde você vai?",
-        label_date: "Data",
+        label_date_start: "Ida",
+        label_date_end: "Volta",
         label_guests: "Hóspedes",
         placeholder_guests: "1 Pessoa",
-        btn_search: "Buscar Melhores Opções"
+        btn_search: "Buscar Melhores Opções",
+        btn_add_destination: "Adicionar Parada",
+        btn_remove: "Remover"
     }
 };

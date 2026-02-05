@@ -11,7 +11,7 @@ import { FlightCard } from '@/components/flights/FlightCard';
 import { HotelCard } from '@/components/accommodation/HotelCard';
 import { ItinerarySuggestions } from '@/components/entertainment/ItinerarySuggestions';
 import { TripSummary } from '@/components/summary/TripSummary';
-import { Plane, Building, ArrowRight } from 'lucide-react';
+import { Plane, Building, ArrowRight, Calendar } from 'lucide-react';
 
 /* Jadoo Components */
 import { Hero } from '@/components/landing/Hero';
@@ -34,32 +34,42 @@ export default function Home() {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [budget, setBudget] = useState({ food: 0, extras: 0, total: 0 });
 
+  // Dynamic duration calculation
+  const [displayDuration, setDisplayDuration] = useState(5);
+
   const totalTravelers = state.travelers.adults + state.travelers.children + state.travelers.babies;
-  const duration = 5;
+
+  const calculateDuration = (start: string, end: string) => {
+    if (!start || !end) return 5;
+    const s = new Date(start);
+    const e = new Date(end);
+    const diffTime = Math.abs(e.getTime() - s.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 1;
+  };
 
   // Handle Search Widget Action from Hero
-  const handleStartPlanning = (type: 'flight' | 'hotel', destination: string, date: string) => {
-    console.log("Starting planning from widget:", { type, destination, date });
+  const handleStartPlanning = async (type: 'flight' | 'hotel', destinations: any[]) => {
+    console.log("Starting planning from widget:", { type, destinations });
 
-    // 1. Update global state for consistency
-    const newDestinations = [{
-      id: crypto.randomUUID(),
-      city: destination,
-      startDate: date,
-      endDate: ''
-    }];
-    actions.updateDestinations(newDestinations);
+    // 1. Update global state
+    actions.updateDestinations(destinations);
 
-    // 2. Immediate search
-    doSearchWithParams(destination, date);
+    // 2. Calculate duration from the first destination dates
+    const first = destinations[0];
+    const duration = calculateDuration(first.startDate, first.endDate);
+    setDisplayDuration(duration);
 
-    // 3. Smooth scroll
+    // 3. Immediate search
+    await doSearchWithParams(first.city, first.startDate, duration);
+
+    // 4. Smooth scroll
     setTimeout(() => {
       plannerRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
-  const doSearchWithParams = async (city: string, date: string) => {
+  const doSearchWithParams = async (city: string, date: string, duration: number) => {
     setLoading(true);
     setSearched(true);
     setMode('results');
@@ -85,7 +95,9 @@ export default function Home() {
 
     const firstDest = state.destinations[0];
     if (firstDest?.city && firstDest?.startDate) {
-      doSearchWithParams(firstDest.city, firstDest.startDate);
+      const duration = calculateDuration(firstDest.startDate, firstDest.endDate);
+      setDisplayDuration(duration);
+      doSearchWithParams(firstDest.city, firstDest.startDate, duration);
     }
   };
 
@@ -121,7 +133,6 @@ export default function Home() {
             <div className="flow-container">
               {!searched ? (
                 <div className="wizard-wrapper">
-                  {/* Wizard content from previous version for manual adjustments */}
                   <section className="step-section fade-up">
                     <TripTypeSelector selected={state.tripType} onSelect={actions.updateTripType} />
                   </section>
@@ -153,9 +164,15 @@ export default function Home() {
               ) : (
                 <div className="results-container fade-up">
                   <div className="results-header">
-                    <h2 className="results-title">
-                      {t.search.tab_flights} & {t.search.tab_hotels} em <span className="highlight">{state.destinations[0]?.city}</span>
-                    </h2>
+                    <div className="results-title-group">
+                      <h2 className="results-title">
+                        {t.search.tab_flights} & {t.search.tab_hotels} em <span className="highlight">{state.destinations[0]?.city}</span>
+                      </h2>
+                      <div className="trip-period">
+                        <Calendar size={16} />
+                        <span>{displayDuration} {t.booking.stay_duration}</span>
+                      </div>
+                    </div>
                     <button className="btn-text" onClick={() => { setSearched(false); setMode('landing'); }}>
                       Nova busca
                     </button>
@@ -181,7 +198,7 @@ export default function Home() {
                         </div>
 
                         <div className="results-column">
-                          <h3 className="column-title"><Building size={20} /> {t.search.tab_hotels} ({duration} nights)</h3>
+                          <h3 className="column-title"><Building size={20} /> {t.search.tab_hotels} ({displayDuration} {t.booking.stay_duration})</h3>
                           <div className="cards-list">
                             {hotels.length > 0 ? (
                               hotels.map(hotel => <HotelCard key={hotel.id} hotel={hotel} />)
@@ -193,11 +210,11 @@ export default function Home() {
                       </div>
 
                       <div className="budget-section fade-up">
-                        <BudgetCalculator days={duration} travelers={totalTravelers} onBudgetChange={setBudget} />
+                        <BudgetCalculator days={displayDuration} travelers={totalTravelers} onBudgetChange={setBudget} />
                       </div>
 
                       <div className="itinerary-section fade-up">
-                        <ItinerarySuggestions destination={state.destinations[0]?.city} days={duration} />
+                        <ItinerarySuggestions destination={state.destinations[0]?.city} days={displayDuration} />
                       </div>
 
                       <div className="summary-section fade-up">
@@ -233,9 +250,24 @@ export default function Home() {
 
         .planner-section {
           background: #f9f9f9;
-          padding: 8rem 0; /* More space */
+          padding: 8rem 0;
           min-height: 80vh;
           scroll-margin-top: 50px;
+        }
+
+        .results-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .trip-period {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         .section-header {
@@ -289,13 +321,14 @@ export default function Home() {
         .results-header {
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 3rem;
         }
 
         .results-title {
           font-size: 2rem;
           font-weight: 700;
+          margin: 0;
         }
 
         .highlight {

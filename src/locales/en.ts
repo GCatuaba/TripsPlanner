@@ -38,20 +38,25 @@ export const en = {
         card_title: "Trip To Greece",
         card_date: "14-29 June",
         card_author: "by Robbin Joseph",
-        ongoing: "Ongoing",
         ongoing_trip: "Trip to Rome",
         completed: "completed",
         people_going: "people going",
-        people_going_count: "24 people going"
+        people_going_count: "24 people going",
+        stay_duration: "days stay",
+        ongoing: "Ongoing",
+        multidestination: "Multi-destination"
     },
     search: {
         tab_flights: "Flights",
         tab_hotels: "Hotels",
         label_destination: "Destination",
         placeholder_destination: "Where are you going?",
-        label_date: "Date",
+        label_date_start: "Departure",
+        label_date_end: "Return",
         label_guests: "Guests",
         placeholder_guests: "1 Person",
-        btn_search: "Search"
+        btn_search: "Search",
+        btn_add_destination: "Add Destination",
+        btn_remove: "Remove"
     }
 };

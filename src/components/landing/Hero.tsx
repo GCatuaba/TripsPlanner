@@ -5,7 +5,7 @@ import { useTranslation } from '@/context/LanguageContext';
 import { SearchWidget } from './SearchWidget';
 
 interface HeroProps {
-    onStart: (type: 'flight' | 'hotel', destination: string, date: string) => void;
+    onStart: (type: 'flight' | 'hotel', destinations: any[]) => void;
 }
 
 export function Hero({ onStart }: HeroProps) {
