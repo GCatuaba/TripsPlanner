@@ -1,16 +1,18 @@
 "use client";
 
 import { Map, CreditCard, Plane, Building, Leaf, Send, MapPin, Heart } from 'lucide-react';
-import Image from 'next/image';
+import { useTranslation } from '@/context/LanguageContext';
 
 export function BookingSteps() {
+    const { t } = useTranslation();
+
     return (
         <section className="booking-section">
             <div className="container booking-grid">
                 {/* Left Column - Steps */}
                 <div className="steps-content fade-up">
-                    <span className="subtitle">Easy and Fast</span>
-                    <h2 className="title">Book Your Next Trip In 3 Easy Steps</h2>
+                    <span className="subtitle">{t.booking.subtitle}</span>
+                    <h2 className="title">{t.booking.title}</h2>
 
                     <div className="steps-list">
                         <div className="step-item">
@@ -18,8 +20,8 @@ export function BookingSteps() {
                                 <MapPin size={20} color="white" />
                             </div>
                             <div className="step-text">
-                                <h3>Choose Destination</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                                <h3>{t.booking.step1.title}</h3>
+                                <p>{t.booking.step1.desc}</p>
                             </div>
                         </div>
 
@@ -28,8 +30,8 @@ export function BookingSteps() {
                                 <CreditCard size={20} color="white" />
                             </div>
                             <div className="step-text">
-                                <h3>Make Payment</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                                <h3>{t.booking.step2.title}</h3>
+                                <p>{t.booking.step2.desc}</p>
                             </div>
                         </div>
 
@@ -38,8 +40,8 @@ export function BookingSteps() {
                                 <Plane size={20} color="white" />
                             </div>
                             <div className="step-text">
-                                <h3>Reach Airport on Selected Date</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                                <h3>{t.booking.step3.title}</h3>
+                                <p>{t.booking.step3.desc}</p>
                             </div>
                         </div>
                     </div>
@@ -52,7 +54,7 @@ export function BookingSteps() {
                             <img src="/assets/images/booking-greece.png" alt="Greece" />
                         </div>
                         <div className="mockup-content">
-                            <h3>Trip To Greece</h3>
+                            <h3>{t.booking.card_title}</h3>
                             <p className="date">14-29 June | by Robbin joseph</p>
 
                             <div className="mockup-icons">
@@ -77,12 +79,12 @@ export function BookingSteps() {
                                     <img src="/assets/images/dest-rome.png" alt="Rome" className="floating-thumb" />
                                 </div>
                                 <div className="floating-text">
-                                    <span className="ongoing">Ongoing</span>
+                                    <span className="ongoing">{t.booking.ongoing}</span>
                                     <h4>Trip to rome</h4>
                                     <div className="progress-bar">
                                         <div className="progress" style={{ width: '40%' }}></div>
                                     </div>
-                                    <span className="percent">40% completed</span>
+                                    <span className="percent">40% {t.booking.completed}</span>
                                 </div>
                             </div>
                         </div>
@@ -148,8 +150,7 @@ export function BookingSteps() {
         .step-text h3 {
             font-size: 1rem;
             font-weight: 700;
-            color: var(--text-secondary); /* Design uses greyish text for headers here surprisingly, or dark */
-            color: var(--text-primary); /* Let's stick to primary */
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
         
@@ -159,7 +160,6 @@ export function BookingSteps() {
             line-height: 1.5;
         }
         
-        /* Right Side Card */
         .card-mockup-wrapper {
             position: relative;
             display: flex;
@@ -170,9 +170,7 @@ export function BookingSteps() {
             background: white;
             padding: 1.5rem;
             border-radius: 26px;
-            box-shadow: 0 100px 80px rgba(0,0,0,0.02), 0 64.8px 46.8px rgba(0,0,0,0.015), 0 38.5px 25.4px rgba(0,0,0,0.012), 0 20px 13px rgba(0,0,0,0.01), 0 8.1px 6.5px rgba(0,0,0,0.007), 0 1.9px 3.1px rgba(0,0,0,0.004);
-            // box-shadow derived from design feel
-            box-shadow: 0 30px 60px rgba(0,0,0,0.08); /* Simpler shadow */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
             width: 370px;
             position: relative;
             z-index: 10;
@@ -237,7 +235,6 @@ export function BookingSteps() {
             color: #4152CA;
         }
         
-        /* Floating Card */
         .floating-card {
             position: absolute;
             bottom: 40px;
@@ -254,14 +251,6 @@ export function BookingSteps() {
             display: flex;
             gap: 1rem;
             align-items: flex-start;
-        }
-        
-        .floating-touch {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
         }
         
         .floating-thumb {

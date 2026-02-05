@@ -1,14 +1,17 @@
 "use client";
 
 import { Cloud, Plane, Mic, Settings } from 'lucide-react';
+import { useTranslation } from '@/context/LanguageContext';
 
 export function Services() {
+    const { t } = useTranslation();
+
     return (
         <section className="services-section">
             <div className="container">
                 <div className="section-header fade-up">
-                    <span className="subtitle">CATEGORY</span>
-                    <h2 className="title">We Offer Best Services</h2>
+                    <span className="subtitle">{t.services.subtitle}</span>
+                    <h2 className="title">{t.services.title}</h2>
                 </div>
 
                 <div className="services-grid">
@@ -18,8 +21,8 @@ export function Services() {
                             <Cloud size={32} color="var(--primary-orange)" />
                             <div className="bg-shape"></div>
                         </div>
-                        <h3>Calculated Weather</h3>
-                        <p>Built Wicket longer admire do barton vanity itself do in it.</p>
+                        <h3>{t.services.weather.title}</h3>
+                        <p>{t.services.weather.desc}</p>
                     </div>
 
                     {/* Service 2 - Highlighted */}
@@ -30,8 +33,8 @@ export function Services() {
                                 <Plane size={32} color="var(--primary-orange)" />
                                 <div className="bg-shape"></div>
                             </div>
-                            <h3>Best Flights</h3>
-                            <p>Engrossed listening. Park gate sell they west hard for the.</p>
+                            <h3>{t.services.flights.title}</h3>
+                            <p>{t.services.flights.desc}</p>
                         </div>
                     </div>
 
@@ -41,8 +44,8 @@ export function Services() {
                             <Mic size={32} color="var(--primary-orange)" />
                             <div className="bg-shape"></div>
                         </div>
-                        <h3>Local Events</h3>
-                        <p>Barton vanity itself do in it. Preferd to men it engrossed listening.</p>
+                        <h3>{t.services.events.title}</h3>
+                        <p>{t.services.events.desc}</p>
                     </div>
 
                     {/* Service 4 */}
@@ -51,8 +54,8 @@ export function Services() {
                             <Settings size={32} color="var(--primary-orange)" />
                             <div className="bg-shape"></div>
                         </div>
-                        <h3>Customization</h3>
-                        <p>We deliver outsourced aviation services for military customers</p>
+                        <h3>{t.services.custom.title}</h3>
+                        <p>{t.services.custom.desc}</p>
                     </div>
                 </div>
             </div>

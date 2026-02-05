@@ -1,26 +1,29 @@
 "use client";
 
 import { Navigation } from 'lucide-react';
+import { useTranslation } from '@/context/LanguageContext';
 
 export function Destinations() {
+    const { t } = useTranslation();
+
     const destinations = [
         {
             city: "Rome, Italy",
-            days: "10 Days Trip",
+            days: `10 ${t.destinations.trip_days}`,
             price: "$5.42k",
             image: "/assets/images/dest-rome.png",
             rating: "5.0"
         },
         {
             city: "London, UK",
-            days: "12 Days Trip",
+            days: `12 ${t.destinations.trip_days}`,
             price: "$4.2k",
             image: "/assets/images/dest-london.png",
             rating: "4.8"
         },
         {
             city: "Full Europe",
-            days: "28 Days Trip",
+            days: `28 ${t.destinations.trip_days}`,
             price: "$15k",
             image: "/assets/images/dest-europe.png",
             rating: "4.9"
@@ -31,8 +34,8 @@ export function Destinations() {
         <section className="destinations-section">
             <div className="container">
                 <div className="section-header fade-up">
-                    <span className="subtitle">Top Selling</span>
-                    <h2 className="title">Top Destinations</h2>
+                    <span className="subtitle">{t.destinations.subtitle}</span>
+                    <h2 className="title">{t.destinations.title}</h2>
                 </div>
 
                 <div className="destinations-grid">
@@ -56,10 +59,8 @@ export function Destinations() {
                     ))}
 
                     <div className="decor-spiral">
-                        {/* Decorative spiral SVG placeholder */}
                         <svg width="96" height="252" viewBox="0 0 96 252" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8 244C8 244 50 200 80 150" stroke="#8A79DF" strokeWidth="2" strokeDasharray="5 5" />
-                            {/* Simplified visual */}
                         </svg>
                     </div>
                 </div>
