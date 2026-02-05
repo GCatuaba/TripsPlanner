@@ -24,11 +24,6 @@ export function Hero({ onStart }: HeroProps) {
                     <p className="description">
                         {t.hero.description}
                     </p>
-
-                    {/* Replaced buttons with SearchWidget for immediate action */}
-                    <div className="widget-wrapper-mobile">
-                        {/* Mobile view might show buttons or collapsed widget. For now, hiding buttons in favor of widget. */}
-                    </div>
                 </div>
 
                 <div className="hero-image-col fade-up" style={{ animationDelay: '0.2s' }}>
@@ -49,16 +44,12 @@ export function Hero({ onStart }: HeroProps) {
                 <SearchWidget onSearch={onStart} />
             </div>
 
-            {/* Background blobs for Jadoo effect */}
-            <div className="bg-blob-right"></div>
-            <div className="bg-blob-left"></div>
-
             <style jsx>{`
         .hero-section {
-          padding-top: 8rem; /* Space for fixed header */
+          padding-top: 8rem;
           padding-bottom: 5rem;
           position: relative;
-          overflow: visible; /* Allow widget overlap */
+          overflow: visible;
           min-height: 800px;
         }
 
@@ -74,12 +65,12 @@ export function Hero({ onStart }: HeroProps) {
         .widget-container {
             position: relative;
             z-index: 30;
-            margin-top: -50px; /* Pull widget up slightly */
+            margin-top: -50px;
         }
 
         .hero-text-col {
           flex: 1;
-          max-width: 550px;
+          max-width: 600px;
         }
 
         .subtitle {
@@ -87,13 +78,24 @@ export function Hero({ onStart }: HeroProps) {
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          font-size: 1.1rem;
-          display: block;
+          font-size: clamp(0.9rem, 2vw, 1.1rem);
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
           margin-bottom: 1.5rem;
         }
 
+        .subtitle::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: clamp(18px, 4vw, 24px);
+            background: var(--primary-orange);
+            border-radius: 2px;
+        }
+
         .title {
-          font-size: 4.5rem;
+          font-size: clamp(2.5rem, 8vw, 4.5rem);
           line-height: 1.1;
           margin-bottom: 2rem;
           letter-spacing: -2px;
@@ -115,63 +117,31 @@ export function Hero({ onStart }: HeroProps) {
             height: 15px;
             background: var(--primary-orange);
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.2;
             transform: skewX(-20deg);
         }
 
         .description {
             color: var(--text-secondary);
             line-height: 1.8;
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 2.5rem;
-            font-family: var(--font-body);
+            max-width: 480px;
         }
 
         .hero-image-col {
             flex: 1;
             position: relative;
             display: flex;
-            justify-content: center;
-        }
-        
-        .image-wrapper {
-            position: relative;
+            justify-content: flex-end;
         }
         
         .hero-main-img {
-            max-width: 100%;
+            max-width: 110%;
             height: auto;
-            object-fit: contain;
-            width: 700px; 
-            transform: scale(1.1) translateY(-20px);
+            transform: scale(1.1) translateX(10%);
         }
 
-        .bg-blob-right {
-           position: absolute;
-           top: 0;
-           right: 0;
-           width: 700px;
-           height: 800px;
-           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23FFF1DA' d='M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-4.9C93.5,9.4,82.2,23.1,70.8,34.8C59.4,46.5,47.9,56.2,35.2,64.2C22.5,72.2,8.6,78.5,-4.8,86.8C-18.2,95.1,-31.1,105.4,-42.6,101.8C-54.1,98.2,-64.2,80.7,-72.2,65.1C-80.2,49.5,-86.1,35.8,-88.4,21.5C-90.7,7.2,-89.4,-7.7,-84.4,-21.8C-79.4,-35.9,-70.7,-49.2,-59.2,-58.5C-47.7,-67.8,-33.4,-73.1,-19.1,-74.6C-4.8,-76.1,9.6,-73.8,24.7,-76.4' transform='translate(100 100)' /%3E%3C/svg%3E");
-           background-size: cover;
-           background-repeat: no-repeat;
-           z-index: 1;
-           opacity: 0.5;
-           transform: translate(30%, -20%);
-        }
-
-        .bg-blob-left {
-            position: absolute;
-            top: 100px;
-            left: -100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
-            opacity: 0.15;
-            filter: blur(80px);
-            z-index: 1;
-        }
-        
         .plane-1, .plane-2 {
             position: absolute;
             font-size: 2rem;
@@ -188,10 +158,10 @@ export function Hero({ onStart }: HeroProps) {
         }
 
         @media (max-width: 1024px) {
-           .title { font-size: 3.5rem; }
            .hero-content { flex-direction: column-reverse; text-align: center; }
-           .hero-text-col { margin-top: 2rem; max-width: 100%; }
-           .bg-blob-right { transform: translate(50%, -50%); }
+           .hero-text-col { margin-top: 2rem; max-width: 100%; display: flex; flex-direction: column; align-items: center; }
+           .hero-image-col { justify-content: center; }
+           .hero-main-img { transform: scale(1) translateX(0); }
            .widget-container { margin-top: 0; }
         }
       `}</style>

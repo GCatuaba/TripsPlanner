@@ -72,7 +72,7 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
 
                 <button className="btn-search" onClick={() => onSearch(activeTab, destination, date)}>
                     <Search size={20} />
-                    {t.search.btn_search}
+                    <span>{t.search.btn_search}</span>
                 </button>
             </div>
 
@@ -80,10 +80,10 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                 .search-widget {
                     background: white;
                     border-radius: 16px;
-                    padding: 1.5rem;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* Jadoo soft shadow */
-                    max-width: 800px;
-                    margin-top: 2rem;
+                    padding: 1.5rem 2rem;
+                    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+                    max-width: 1000px;
+                    margin: 0 auto;
                     position: relative;
                     z-index: 20;
                 }
@@ -93,7 +93,7 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                     gap: 1rem;
                     margin-bottom: 1.5rem;
                     border-bottom: 1px solid #eee;
-                    padding-bottom: 0.5rem;
+                    padding-bottom: 1rem;
                 }
 
                 .tab {
@@ -106,7 +106,7 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                     font-weight: 500;
                     color: var(--text-secondary);
                     cursor: pointer;
-                    padding: 0.5rem 1rem;
+                    padding: 0.6rem 1.2rem;
                     border-radius: 8px;
                     transition: all 0.2s;
                 }
@@ -114,47 +114,52 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                 .tab.active {
                     background: #FFF1DA;
                     color: var(--primary-orange);
+                    box-shadow: 0 4px 14px rgba(223, 105, 81, 0.1);
                 }
 
                 .search-inputs {
                     display: flex;
-                    align-items: center;
-                    gap: 1rem;
+                    align-items: flex-end;
+                    gap: 1.5rem;
+                    flex-wrap: wrap;
                 }
 
                 .input-group {
                     flex: 1;
+                    min-width: 180px;
                 }
 
                 .input-group label {
                     display: block;
                     font-size: 0.85rem;
-                    font-weight: 600;
+                    font-weight: 700;
                     color: var(--text-primary);
                     margin-bottom: 0.5rem;
                 }
 
                 .input-wrapper input {
                     width: 100%;
-                    padding: 0.5rem;
-                    border: 1px solid transparent;
+                    padding: 0.75rem;
+                    border: 1px solid #eee;
                     border-radius: 8px;
                     font-family: var(--font-body);
-                    font-size: 1rem;
+                    font-size: 0.95rem;
                     background: #F8F8F8;
-                    transition: all 0.2s;
+                    transition: all 0.22s;
                     outline: none;
                 }
 
                 .input-wrapper input:focus {
                     background: white;
                     border-color: var(--primary-orange);
+                    box-shadow: 0 0 0 4px rgba(223, 105, 81, 0.05);
                 }
 
                 .divider {
                     width: 1px;
-                    height: 40px;
-                    background: #E0E0E0;
+                    height: 45px;
+                    background: #eee;
+                    margin-bottom: 5px;
                 }
 
                 .fake-select {
@@ -163,8 +168,9 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                     gap: 0.5rem;
                     color: var(--text-secondary);
                     font-size: 0.95rem;
-                    padding: 0.5rem;
+                    padding: 0.75rem;
                     background: #F8F8F8;
+                    border: 1px solid #eee;
                     border-radius: 8px;
                 }
 
@@ -172,31 +178,38 @@ export function SearchWidget({ onSearch }: SearchWidgetProps) {
                     background: var(--primary-orange);
                     color: white;
                     border: none;
-                    padding: 1rem 1.5rem;
-                    border-radius: 10px;
+                    padding: 1rem 2rem;
+                    border-radius: 12px;
                     font-weight: 600;
                     font-size: 1rem;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    gap: 0.5rem;
-                    box-shadow: 0 10px 20px rgba(223, 105, 81, 0.3);
-                    transition: transform 0.2s;
+                    justify-content: center;
+                    gap: 0.75rem;
+                    box-shadow: 0 15px 30px rgba(223, 105, 81, 0.25);
+                    transition: all 0.22s;
                     white-space: nowrap;
+                    min-width: 180px;
                 }
 
                 .btn-search:hover {
                     transform: translateY(-2px);
+                    box-shadow: 0 20px 40px rgba(223, 105, 81, 0.35);
+                    background: #e65a3d;
+                }
+
+                @media (max-width: 1024px) {
+                    .divider { display: none; }
                 }
 
                 @media (max-width: 768px) {
                     .search-inputs {
                         flex-direction: column;
                         align-items: stretch;
-                        gap: 1.5rem;
                     }
-                    .divider { display: none; }
-                    .search-widget { margin: 2rem 1rem; }
+                    .input-group { min-width: 100%; }
+                    .btn-search { width: 100%; margin-top: 1rem; }
                 }
             `}</style>
         </div>

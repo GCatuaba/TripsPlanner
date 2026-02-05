@@ -146,7 +146,7 @@ export function Services() {
         .service-card h3 {
             font-size: 1.25rem;
             margin-bottom: 1rem;
-            white-space: nowrap;
+            /* Removed nowrap to avoid breaking on long text */
         }
         
         .service-card p {
